@@ -1,0 +1,15 @@
+{
+  "name": "TestBench",
+  "version": "1.0.0",
+  "description": "Testing johnny-five",
+  "main": "app.js",
+  "scripts": {},
+  "author": "Fadi Bunni",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^1.11.0",
+    "socket.io": "^1.7.2",
+    "neo-barometer": "^1.0.6",
+    "johnny-five": "0.9.58"
+  }
+}
