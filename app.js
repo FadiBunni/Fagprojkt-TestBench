@@ -1,18 +1,16 @@
-var serialport = require('serialport');
+var SerialPort = require('serialport');
+var port = new SerialPort('/dev/tty-usbserial1');
 
-var mySerial = new serialport('/dev/ttyMCC', {
-	baudrate: 9600,
-	flowContro: false,
-	parser: serialport.parsers.readline("\r\n")
+port.on('open', function() {
+  port.write('main screen turn on', function(err) {
+    if (err) {
+      return console.log('Error on write: ', err.message);
+    }
+    console.log('message written');
+  });
 });
 
-mySerial.on('open', function(){
-	console.log("Port open");
-});
-
-mySerial.on('data', function(data){
-	if(data){
-		console.log("yay, we have data!");
-	}
-	console.log(data);
-});
+// open errors will be emitted as an error event
+port.on('error', function(err) {
+  console.log('Error: ', err.message);
+})
