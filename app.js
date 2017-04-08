@@ -1,5 +1,4 @@
-var serialport = require('serialport');
-var SerialPort = serialport.SerialPort;
+var SerialPort = require('serialport');
 
 var mySerial = new SerialPort('/dev/ttyMCC', {
 	baudrate: 9600,
