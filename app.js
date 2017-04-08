@@ -18,5 +18,8 @@ port.on('error', function(err) {
 port.on('data', function (data) {
 	if(data){
   		console.log('Data: ' + data);
+  		port.write('Recived the data')
 	}
 });
+
+port.write('heeys')
