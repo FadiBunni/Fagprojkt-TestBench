@@ -2,7 +2,8 @@ var serialport = require('serialport');
 
 var mySerial = new serialport('/dev/ttyMCC', {
 	baudrate: 9600,
-	parser: serialport.parsers.readline("\n")
+	flowContro: false,
+	parser: serialport.parsers.readline("\r\n")
 });
 
 mySerial.on('open', function(){
@@ -10,5 +11,8 @@ mySerial.on('open', function(){
 });
 
 mySerial.on('data', function(data){
+	if(data){
+		console.log("yay, we have data!");
+	}
 	console.log(data);
 });
