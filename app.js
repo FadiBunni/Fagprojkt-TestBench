@@ -16,8 +16,7 @@ port.on('error', function(err) {
 });
 
 port.on('data', function (data) {
-  console.log('Data: ' + data);
+	if(data){
+  		console.log('Data: ' + data);
+	}
 });
-
-port.write('Hi Mom!');
-port.write(new Buffer('Hi Mom!'));
