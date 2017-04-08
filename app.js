@@ -1,6 +1,6 @@
-var SerialPort = require('serialport');
+var serialport = require('serialport');
 
-var mySerial = new SerialPort('/dev/ttyMCC', {
+var mySerial = new serialport('/dev/ttyMCC', {
 	baudrate: 9600,
 	parser: serialport.parsers.readline("\n")
 });
