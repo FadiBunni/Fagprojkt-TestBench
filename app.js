@@ -8,6 +8,7 @@ sp.on('open', function() {
     }
     console.log('message written');
   });
+  sp.write('Hello World');
 });
 
 // open errors will be emitted as an error event
@@ -20,5 +21,3 @@ sp.on('data', function (data) {
   		console.log('Data: ' + data);
 	}
 });
-
-sp.write('Hello World');
