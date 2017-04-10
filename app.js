@@ -21,4 +21,4 @@ sp.on('data', function (data) {
 	}
 });
 
-port.write('Hello World');
+sp.write('Hello World');
