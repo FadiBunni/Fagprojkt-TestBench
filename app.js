@@ -2,7 +2,7 @@ var SerialPort = require('serialport');
 var sp = new SerialPort('/dev/ttyMCC');
 
 sp.on('open', function() {
-  sp.write('Hello World');
+  sp.print('Hello World');
 });
 
 sp.on('data', function (data) {
