@@ -4,6 +4,7 @@ var sp = new SerialPort('/dev/ttyMCC');
 sp.on('open', function() {
 	setTimeout(function(){
 		sp.write("hello");
+		console.log("from console");
 	},1000);
 });
 
