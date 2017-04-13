@@ -7,9 +7,10 @@
   "author": "Fadi Bunni",
   "license": "ISC",
   "dependencies": {
-    "nodemon": "^1.11.0",
-    "socket.io": "^1.7.2",
+    "johnny-five": "0.9.58",
     "neo-barometer": "^1.0.6",
-    "johnny-five": "0.9.58"
+    "nodemon": "^1.11.0",
+    "serialport": "^4.0.7",
+    "socket.io": "^1.7.2"
   }
 }

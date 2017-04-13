@@ -6,6 +6,7 @@ sp.on('open', function() {
 		setTimeout(function(){
 			sp.write("0");
 		},1000);
+		console.log("hello!");
 		sp.write("1");
 
 	},1000);
