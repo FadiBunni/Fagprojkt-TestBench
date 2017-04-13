@@ -2,14 +2,17 @@ var SerialPort = require('serialport');
 var sp = new SerialPort('/dev/ttyMCC');
 
 sp.on('open', function() {
-	setTimeout(function(){
-		sp.write("hello");
-		console.log("from console");
+	setInterval(function(){
+		setTimeout(function(){
+			sp.write("0");
+		},1000);
+		sp.write("1");
+
 	},1000);
 });
 
 sp.on('data', function (data) {
 	if(data){
-  		console.log('Data: ' + data);
+  		//console.log('Data: ' + data);
 	}
 });
