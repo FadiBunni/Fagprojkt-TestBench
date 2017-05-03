@@ -1,5 +1,30 @@
-var sleep = require('system-sleep');
-var net = require('net');
+const sleep = require('system-sleep');
+const net = require('net');
+
+const express = require('express');
+const app     = express();
+const http    = require('http').Server(app);
+const io      = require('socket.io')(http);
+const path    = require('path');
+
+app.get('/', function(req, res) {
+	res.sendFile(__dirname + '/client/index.html');
+});
+
+app.use(express.static(path.join(__dirname + '/client')));
+
+const port = process.env.PORT || 2000;
+http.listen(port,function(){
+	console.log('Server started: http://localhost:2000/');
+});
+
+
+io.on('connection', function(socket){
+	console.log('user connected: ', socket.id);
+});
+
+
+//////////////
 
 var server = net.createServer(function(conn) {
 	console.log("Server: Client connected");
@@ -27,6 +52,8 @@ var server = net.createServer(function(conn) {
 	}
 });
 
-server.listen(3000, "192.168.0.107", function(){
+
+//Enduroam changes the ip, remember to check. 
+server.listen(3000, "10.16.175.201", function(){
     console.log("Server: Listening");
 });

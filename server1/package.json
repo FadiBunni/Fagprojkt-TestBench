@@ -1,0 +1,16 @@
+{
+  "name": "server1",
+  "version": "1.0.0",
+  "description": "Node js server that connects to Udoo Neo",
+  "main": "app.js",
+  "scripts": {
+    "build": "watchify client/js/sketch.js -o client/js/bundle/sketch.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2",
+    "socket.io": "^1.7.3",
+    "system-sleep": "^1.3.0"
+  }
+}
