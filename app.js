@@ -3,7 +3,7 @@ var SerialPort = require('serialport');
 var sp = new SerialPort('/dev/ttyMCC');
 
 var socket = new net.Socket();
-socket.connect(3000,'192.168.0.107', function() {
+socket.connect(3000,'10.16.163.100', function() {
 	console.log("Client: Connected to server");
 	//socket.write('Hello, server! Love, Client.');
 });
@@ -33,14 +33,4 @@ sp.on('data', function (data) {
 	if(data){
   		//console.log('Data: ' + data);
 	}
-});
-
-
-
-
-
-
-socket.on('close', function() {
-	console.log('Connection closed');
-	socket.destroy();
 });
