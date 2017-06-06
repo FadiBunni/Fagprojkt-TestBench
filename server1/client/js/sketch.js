@@ -5,15 +5,14 @@ socket.on('connected', 'hey');
 var s = function(p) {
 
   var value = false;
-  var direction = 0;
+  var direction = 90;
+  var isKeyPressed = false;
 
   p.setup = function() {
     //create canvas and center it
     var canvas = p.createCanvas(800, 800);
     centerCanvas(canvas);
     p.background(255);
-    left = 0;
-    right = 0;
   };
 
   p.draw = function() {
@@ -28,34 +27,39 @@ var s = function(p) {
     }else if(value === 1){
       p.fill(0,204,0);
       Arrow(340,390,10,1);
-      direction += 1;
+      direction -= 5;
     }else if(value === 2){
       p.fill(0,204,0);
       Arrow(500,390,10,0);
-      direction -= 1;
+      direction += 5;
     }
-    console.log(direction);
-    //console.log(direction)
-    if(direction >=50){
-      direction = 50;
-    }else if(direction <= -50){
-      direction =-50;
+
+    if(direction >=180){
+      direction = 180;
+    }else if(direction <= 0){
+      direction = 0;
     }
-    socket.emit("getDirectionData",direction);
+    if(isKeyPressed){
+      console.log(direction);
+      socket.emit("isKeyPressed", isKeyPressed);
+      socket.emit("getDirectionData",direction);
+    }
   };
 
   p.keyPressed = function(){
     if(p.keyCode ===  p.LEFT_ARROW){
+      isKeyPressed = true;
       value = 1;
     }else if(p.keyCode === p.RIGHT_ARROW){
       value = 2;
+      isKeyPressed = true;
     }
   };
 
   p.keyReleased = function(){
     if(p.keyCode ===  p.LEFT_ARROW || p.keyCode === p.RIGHT_ARROW ){
       value = 0;
-      // direction = 0;
+      isKeyPressed = false;
     }
   };
 

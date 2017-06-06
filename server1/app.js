@@ -19,40 +19,41 @@ http.listen(port,function(){
 });
 
 var direction;
+var isKeyPressed;
 
 io.on('connection', function(socket){
 	console.log('user connected: ', socket.id);
 
 	socket.on("getDirectionData", function(data){
 		//console.log(data);
-
 		direction = data;
-
-	})
-
+	});
+		socket.on("isKeyPressed", function(data){
+		//console.log(data);
+		isKeyPressed = data;
+	});
 });
 
-
 ////////////
-
 var server = net.createServer(function(conn) {
 	console.log("Server: Client connected");
 
 	conn.on("end", function(){
 		console.log("Server: Client disconnected");
-
 		server.close();
 		process.exit(0);
 	});
 
 	setInterval(function(){
-		console.log(direction);
-		conn.write(direction.toString());
-	},45);
-	//console.log("hey");
+		if(direction != undefined){
+			console.log(direction);
+			conn.write(direction.toString());
+		}
+	},120);
+
 });
 
 //Enduroam changes the ip, remember to check. 
-server.listen(3000, "192.168.0.17", function(){
+server.listen(3000, "10.16.138.15", function(){
     console.log("Server: Listening");
 });
