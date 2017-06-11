@@ -20,10 +20,14 @@ var s = function(p) {
       p.fill(128,128,128);
       Arrow(340,390,10,1);
       Arrow(500,390,10,0);
+      Arrow(420,310,10,2/3);
+      Arrow(420,470,10,2);
     if(value === 0){
       p.fill(128,128,128);
       Arrow(340,390,10,1);
       Arrow(500,390,10,0);
+      Arrow(420,310,10,2/3);
+      Arrow(420,470,10,2);
     }else if(value === 1){
       p.fill(0,204,0);
       Arrow(340,390,10,1);
@@ -32,6 +36,12 @@ var s = function(p) {
       p.fill(0,204,0);
       Arrow(500,390,10,0);
       direction += 5;
+    }else if(value === 3){
+      p.fill(0,204,0);
+      Arrow(420,310,10,2/3);
+    }else if(value === 4){
+      p.fill(0,204,0);
+      Arrow(420,470,10,2)
     }
 
     if(direction >=180){
@@ -53,11 +63,17 @@ var s = function(p) {
     }else if(p.keyCode === p.RIGHT_ARROW){
       value = 2;
       isKeyPressed = true;
+    }else if(p.keyCode === p.UP_ARROW){
+      value = 3;
+      isKeyPressed = true;
+    }else if(p.keyCode === p.DOWN_ARROW){
+      value = 4;
+      isKeyPressed = true;
     }
   };
 
   p.keyReleased = function(){
-    if(p.keyCode ===  p.LEFT_ARROW || p.keyCode === p.RIGHT_ARROW ){
+    if(p.keyCode ===  p.LEFT_ARROW || p.keyCode === p.RIGHT_ARROW || p.keyCode === p.UP_ARROW || p.keyCode === p.DOWN_ARROW ){
       value = 0;
       isKeyPressed = false;
     }
