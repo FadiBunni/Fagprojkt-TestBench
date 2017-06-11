@@ -54,6 +54,6 @@ var server = net.createServer(function(conn) {
 });
 
 //Enduroam changes the ip, remember to check. 
-server.listen(3000, "10.16.138.15", function(){
+server.listen(3000, "10.0.0.11", function(){
     console.log("Server: Listening");
 });
