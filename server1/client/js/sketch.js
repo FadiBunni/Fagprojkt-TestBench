@@ -7,6 +7,7 @@ var s = function(p) {
   var value = false;
   var direction = 90;
   var isKeyPressed = false;
+  var motordirection = 0;
 
   p.setup = function() {
     //create canvas and center it
@@ -39,9 +40,11 @@ var s = function(p) {
     }else if(value === 3){
       p.fill(0,204,0);
       Arrow(420,310,10,2/3);
+      motordirection += 5;
     }else if(value === 4){
       p.fill(0,204,0);
       Arrow(420,470,10,2)
+      motordirection += -5;
     }
 
     if(direction >=180){
@@ -49,10 +52,17 @@ var s = function(p) {
     }else if(direction <= 0){
       direction = 0;
     }
+    if(motordirection >= 255){
+      motordirection = 255;
+    }else if(motordirection <= 0){
+      motordirection = 0;
+    }
     if(isKeyPressed){
       console.log(direction);
+      console.log("motor: " + motordirection)
       socket.emit("isKeyPressed", isKeyPressed);
       socket.emit("getDirectionData",direction);
+      socket.emit("getMotorData",motordirection);
     }
   };
 

@@ -20,6 +20,7 @@ http.listen(port,function(){
 
 var direction;
 var isKeyPressed;
+var motordirection;
 
 io.on('connection', function(socket){
 	console.log('user connected: ', socket.id);
@@ -28,32 +29,67 @@ io.on('connection', function(socket){
 		//console.log(data);
 		direction = data;
 	});
-		socket.on("isKeyPressed", function(data){
+	socket.on("isKeyPressed", function(data){
 		//console.log(data);
 		isKeyPressed = data;
+	});
+	socket.on("getMotorData", function(data){
+		motordirection = data;
 	});
 });
 
 ////////////
-var server = net.createServer(function(conn) {
-	console.log("Server: Client connected");
+// var server = net.createServer(function(conn) {
+// 	console.log("Server: Client connected");
+//
+// 	conn.on("end", function(){
+// 		console.log("Server: Client disconnected");
+// 		server.close();
+// 		process.exit(0);
+// 	});
+//
+// 	setInterval(function(){
+// 		if(direction != undefined){
+// 			console.log(direction);
+// 			conn.write(direction.toString());
+// 		}
+// 	},120);
+// });
+//
+// //Enduroam changes the ip, remember to check.
+// server.listen(22205, "169.254.67.196", function(){
+//     console.log("Server: Listening");
+// });
 
-	conn.on("end", function(){
-		console.log("Server: Client disconnected");
-		server.close();
-		process.exit(0);
-	});
+var PORT = 22205;
+var HOST = '169.254.67.196';
 
-	setInterval(function(){
-		if(direction != undefined){
-			console.log(direction);
-			conn.write(direction.toString());
-		}
-	},120);
+var dgram = require('dgram');
 
-});
+var client = dgram.createSocket('udp4');
 
-//Enduroam changes the ip, remember to check. 
-server.listen(3000, "10.0.0.11", function(){
-    console.log("Server: Listening");
-});
+var olddirection = 90;
+var oldmotor = 0;
+setInterval(function(){
+
+	if(direction != undefined && olddirection != direction){
+		console.log("d" + direction);
+		var message = new Buffer("d" +direction.toString());
+		// 			conn.write(direction.toString());
+		client.send(message, 0, message.length, PORT, HOST, function(err, bytes) {
+			if (err) throw err;
+			console.log('UDP message sent to ' + HOST +':'+ PORT);
+		});
+		olddirection = direction;
+	}
+	if(motordirection != undefined && oldmotor != motordirection){
+		console.log("m" + motordirection);
+		var message = new Buffer("m" +motordirection.toString());
+		// 			conn.write(direction.toString());
+		client.send(message, 0, message.length, PORT, HOST, function(err, bytes) {
+			if (err) throw err;
+			console.log('UDP message sent to ' + HOST +':'+ PORT);
+		});
+		oldmotor = motordirection;
+	}
+},500);
