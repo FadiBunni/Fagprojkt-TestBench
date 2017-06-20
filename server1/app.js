@@ -1,6 +1,4 @@
-const sleep = require('system-sleep');
 const net = require('net');
-
 const express = require('express');
 const app     = express();
 const http    = require('http').Server(app);
@@ -38,31 +36,8 @@ io.on('connection', function(socket){
 	});
 });
 
-////////////
-// var server = net.createServer(function(conn) {
-// 	console.log("Server: Client connected");
-//
-// 	conn.on("end", function(){
-// 		console.log("Server: Client disconnected");
-// 		server.close();
-// 		process.exit(0);
-// 	});
-//
-// 	setInterval(function(){
-// 		if(direction != undefined){
-// 			console.log(direction);
-// 			conn.write(direction.toString());
-// 		}
-// 	},120);
-// });
-//
-// //Enduroam changes the ip, remember to check.
-// server.listen(22205, "169.254.67.196", function(){
-//     console.log("Server: Listening");
-// });
-
 var PORT = 22205;
-var HOST = '169.254.67.196';
+var HOST = '169.254.100.2';
 
 var dgram = require('dgram');
 
@@ -70,13 +45,16 @@ var client = dgram.createSocket('udp4');
 
 var olddirection = 90;
 var oldmotor = 0;
+
+client.on('message', function (msg, rinfo) {
+	console.log(msg.toString());
+});
 setInterval(function(){
 
 	if(direction != undefined && olddirection != direction){
 		console.log("d" + direction);
-		var message = new Buffer("d" +direction.toString());
-		// 			conn.write(direction.toString());
-		client.send(message, 0, message.length, PORT, HOST, function(err, bytes) {
+		var message = new Buffer("d" + direction.toString());
+		client.send(message, PORT, HOST, function(err) {
 			if (err) throw err;
 			console.log('UDP message sent to ' + HOST +':'+ PORT);
 		});
@@ -84,12 +62,12 @@ setInterval(function(){
 	}
 	if(motordirection != undefined && oldmotor != motordirection){
 		console.log("m" + motordirection);
-		var message = new Buffer("m" +motordirection.toString());
-		// 			conn.write(direction.toString());
-		client.send(message, 0, message.length, PORT, HOST, function(err, bytes) {
+		var message = new Buffer("m" + motordirection.toString());
+		client.send(message, PORT, HOST, function(err) {
 			if (err) throw err;
 			console.log('UDP message sent to ' + HOST +':'+ PORT);
 		});
 		oldmotor = motordirection;
 	}
 },500);
+

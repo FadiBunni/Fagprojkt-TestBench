@@ -58,7 +58,7 @@ var s = function(p) {
       motordirection = 0;
     }
     if(isKeyPressed){
-      console.log(direction);
+      console.log("servo: " + direction);
       console.log("motor: " + motordirection)
       socket.emit("isKeyPressed", isKeyPressed);
       socket.emit("getDirectionData",direction);
